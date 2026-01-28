@@ -1,0 +1,7 @@
+{
+  "name": "Copy of Copy of Morandi Intelligent Q&A Assistant",
+  "description": "A sophisticated AI-powered chat interface featuring a soft Morandi orange color palette, designed for professional advisory and intelligent Q&A tasks.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
