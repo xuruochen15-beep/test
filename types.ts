@@ -9,6 +9,8 @@ export interface Message {
   content: string;
   timestamp: Date;
   isStreaming?: boolean;
+  rating?: 'like' | 'dislike';
+  feedback?: string;
 }
 
 export interface ChatSession {

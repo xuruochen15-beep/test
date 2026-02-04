@@ -1,12 +1,15 @@
+
 import React from 'react';
 import { Category } from '../types';
 
 interface HeaderProps {
   onNewChat: () => void;
   currentCategory: Category;
+  searchQuery: string;
+  onSearchChange: (query: string) => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onNewChat, currentCategory }) => {
+export const Header: React.FC<HeaderProps> = ({ onNewChat, currentCategory, searchQuery, onSearchChange }) => {
   return (
     <div className="h-20 flex items-center justify-between px-8 bg-white/30 backdrop-blur-md border-b border-gray-100/50 z-10">
       <div className="flex items-center space-x-2">
@@ -20,6 +23,34 @@ export const Header: React.FC<HeaderProps> = ({ onNewChat, currentCategory }) =>
           <p className="text-[10px] text-gray-400 uppercase tracking-widest font-medium">智慧助手小优 · Professional AI</p>
         </div>
       </div>
+
+      {/* Search Bar - Center */}
+      <div className="hidden sm:flex flex-1 max-w-sm mx-8">
+        <div className="relative w-full group">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <svg className="h-4 w-4 text-gray-300 group-focus-within:morandi-orange transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => onSearchChange(e.target.value)}
+            placeholder="在对话中搜索..."
+            className="block w-full pl-10 pr-3 py-2 border morandi-border rounded-xl leading-5 bg-white/50 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-50 focus:border-orange-200 sm:text-xs transition-all"
+          />
+          {searchQuery && (
+            <button 
+              onClick={() => onSearchChange('')}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-300 hover:text-gray-500"
+            >
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          )}
+        </div>
+      </div>
       
       <div className="flex items-center space-x-4">
         <button 
@@ -29,7 +60,7 @@ export const Header: React.FC<HeaderProps> = ({ onNewChat, currentCategory }) =>
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
           </svg>
-          <span>新对话</span>
+          <span className="hidden sm:inline">新对话</span>
         </button>
 
         <div className="w-px h-6 bg-gray-200 hidden sm:block mx-2"></div>

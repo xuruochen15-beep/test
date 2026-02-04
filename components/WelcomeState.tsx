@@ -45,6 +45,7 @@ const OFFICE_MODULES = [
 const DATA_MODULES = [
   { name: '奖金数据问询', icon: '💰', desc: '核算详情、发放进度' },
   { name: '业绩数据问询', icon: '📈', desc: '指标达成、经营分析' },
+  { name: '人事相关问询', icon: '👥', desc: '入职进度、假勤薪酬' },
 ];
 
 const PROCESS_MODULES = [
@@ -75,7 +76,7 @@ export const WelcomeState: React.FC<WelcomeStateProps> = ({ onSuggestionClick, c
 
       {/* Special Sub-modules for Data Consulting Assistant */}
       {isData && (
-        <div className="grid grid-cols-2 gap-4 w-full mb-16 max-w-lg">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full mb-16 max-w-2xl">
           {DATA_MODULES.map((module) => (
             <button
               key={module.name}
@@ -84,7 +85,7 @@ export const WelcomeState: React.FC<WelcomeStateProps> = ({ onSuggestionClick, c
             >
               <div className="absolute top-0 right-0 w-16 h-16 bg-orange-50/30 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-150"></div>
               <div className="text-3xl mb-4 group-hover:scale-110 transition-transform">{module.icon}</div>
-              <h3 className="font-bold text-gray-700 mb-2 text-base">{module.name}</h3>
+              <h3 className="font-bold text-gray-700 mb-2 text-sm">{module.name}</h3>
               <p className="text-[10px] text-gray-400 leading-tight">{module.desc}</p>
             </button>
           ))}

@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
@@ -11,6 +12,7 @@ const App: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [currentCategory, setCurrentCategory] = useState<Category>(Category.DATA);
   const [isLoading, setIsLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const isNewChat = messages.length === 0;
@@ -78,6 +80,7 @@ const App: React.FC = () => {
   const handleNewChat = () => {
     if (window.confirm('确认清空当前对话记录吗？')) {
       setMessages([]);
+      setSearchQuery('');
     }
   };
 
@@ -85,6 +88,7 @@ const App: React.FC = () => {
     setCurrentCategory(cat);
     // When switching major categories, we clear to keep the context pure
     setMessages([]);
+    setSearchQuery('');
   };
 
   return (
@@ -98,7 +102,12 @@ const App: React.FC = () => {
 
       {/* Main Content Area - Right Interaction */}
       <div className="flex flex-col flex-1 relative min-w-0">
-        <Header onNewChat={handleNewChat} currentCategory={currentCategory} />
+        <Header 
+          onNewChat={handleNewChat} 
+          currentCategory={currentCategory} 
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+        />
         
         {/* Main Workspace */}
         <div className="flex-1 overflow-y-auto" ref={scrollRef}>
@@ -110,6 +119,11 @@ const App: React.FC = () => {
                 <div className="px-4 py-1.5 bg-white border morandi-border rounded-full text-[11px] font-bold text-gray-400 uppercase tracking-widest shadow-sm animate-fade-in">
                   正在与 <span className="morandi-orange">{currentCategory}</span> 对话
                 </div>
+                {searchQuery && (
+                   <div className="text-[10px] text-gray-400 italic">
+                     正在筛选包含 "{searchQuery}" 的消息...
+                   </div>
+                )}
               </div>
             )}
 
@@ -121,7 +135,11 @@ const App: React.FC = () => {
                   currentCategory={currentCategory} 
                 />
               ) : (
-                <MessageList messages={messages} onClear={handleNewChat} />
+                <MessageList 
+                  messages={messages} 
+                  onClear={handleNewChat} 
+                  searchQuery={searchQuery}
+                />
               )}
             </div>
           </div>
