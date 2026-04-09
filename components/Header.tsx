@@ -4,28 +4,32 @@ import { Category } from '../types';
 
 interface HeaderProps {
   onNewChat: () => void;
-  currentCategory: Category;
+  onToggleSidebar: () => void;
+  currentCategory: Category | string;
   searchQuery: string;
   onSearchChange: (query: string) => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onNewChat, currentCategory, searchQuery, onSearchChange }) => {
+export const Header: React.FC<HeaderProps> = ({ onNewChat, onToggleSidebar, currentCategory, searchQuery, onSearchChange }) => {
   return (
-    <div className="h-20 flex items-center justify-between px-8 bg-white/30 backdrop-blur-md border-b border-gray-100/50 z-10">
-      <div className="flex items-center space-x-2">
-        <span className="text-gray-400 md:hidden">
+    <div className="h-16 sm:h-20 flex items-center justify-between px-4 sm:px-8 bg-white/30 backdrop-blur-md border-b border-gray-100/50 z-10">
+      <div className="flex items-center space-x-2 sm:space-x-3">
+        <button 
+          onClick={onToggleSidebar}
+          className="text-gray-400 md:hidden p-2 hover:bg-white/50 rounded-lg transition-colors"
+        >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
           </svg>
-        </span>
+        </button>
         <div className="flex flex-col">
-          <h1 className="text-gray-800 font-bold tracking-tight text-lg">{currentCategory}</h1>
-          <p className="text-[10px] text-gray-400 uppercase tracking-widest font-medium">智慧助手小优 · Professional AI</p>
+          <h1 className="text-gray-800 font-bold tracking-tight text-sm sm:text-lg truncate max-w-[120px] sm:max-w-none">{currentCategory}</h1>
+          <p className="text-[8px] sm:text-[10px] text-gray-400 uppercase tracking-widest font-medium">智慧助手小优 · Professional AI</p>
         </div>
       </div>
 
       {/* Search Bar - Center */}
-      <div className="hidden sm:flex flex-1 max-w-sm mx-8">
+      <div className="hidden lg:flex flex-1 max-w-sm mx-8">
         <div className="relative w-full group">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <svg className="h-4 w-4 text-gray-300 group-focus-within:morandi-orange transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -52,18 +56,18 @@ export const Header: React.FC<HeaderProps> = ({ onNewChat, currentCategory, sear
         </div>
       </div>
       
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-2 sm:space-x-4">
         <button 
           onClick={onNewChat}
-          className="flex items-center space-x-2 px-5 py-2.5 morandi-orange-soft-bg text-white rounded-xl shadow-lg shadow-orange-100 hover:scale-105 transition-all active:scale-95 font-medium text-sm"
+          className="flex items-center space-x-1 sm:space-x-2 px-3 sm:px-5 py-2 sm:py-2.5 morandi-orange-soft-bg text-white rounded-xl shadow-lg shadow-orange-100 hover:scale-105 transition-all active:scale-95 font-medium text-xs sm:text-sm"
         >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-3.5 h-3.5 sm:w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
           </svg>
-          <span className="hidden sm:inline">新对话</span>
+          <span className="hidden xs:inline">新对话</span>
         </button>
 
-        <div className="w-px h-6 bg-gray-200 hidden sm:block mx-2"></div>
+        <div className="w-px h-6 bg-gray-200 hidden sm:block mx-1 sm:mx-2"></div>
 
         <div className="flex items-center space-x-4 text-gray-400 hidden sm:flex">
           <button className="p-2 hover:bg-gray-50 rounded-lg transition-colors group">
